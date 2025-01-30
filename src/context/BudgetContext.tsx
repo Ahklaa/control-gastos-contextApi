@@ -8,9 +8,9 @@ type BudgetContextProps = {
 type BudgetProviderProps = {
     children : ReactNode
 }
-const BudgetContext = createContext<BudgetContextProps>(null!)
-
-const BudgetProvider = ({children} : BudgetProviderProps) => {
+export const BudgetContext = createContext<BudgetContextProps>(null!)
+//de donde vienen los datos
+export const  BudgetProvider = ({children} : BudgetProviderProps) => {
     const [state,dispatch] = useReducer(budgetReducer,initialState)
     return (
         <BudgetContext.Provider
