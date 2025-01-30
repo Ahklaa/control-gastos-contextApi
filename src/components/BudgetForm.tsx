@@ -1,9 +1,12 @@
-import { useState, ChangeEvent } from "react"
+import { useState, ChangeEvent, useMemo } from "react"
 export default function BudgetForm() {
     const [budget, setButget] = useState(0)
     const handleChange = (e  : ChangeEvent<HTMLInputElement>) => {
         setButget(+e.target.value)
     }
+    const isValid = useMemo(()=> {
+        return isNaN(budget) || budget <= 0
+    },[budget])
   return (
     <form className="space-y-5">
             <div className="flex flex-col space-y-5">
@@ -18,7 +21,11 @@ export default function BudgetForm() {
                 onChange={handleChange}
                 />
             </div>
-            <input type="submit" className="bg-blue-700 hover:bg-blue-800 cursor-pointer p-2 uppercase font-black text-white w-full" value="Definir Presupuesto" />
+            <input 
+            type="submit"
+            disabled = {isValid}
+            className="bg-blue-700 hover:bg-blue-800 cursor-pointer p-2 uppercase font-black text-white w-full disabled:opacity-10" 
+            value="Definir Presupuesto" />
     </form>
   )
 }
