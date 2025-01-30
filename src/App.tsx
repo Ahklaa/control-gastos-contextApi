@@ -1,11 +1,5 @@
 import BudgetForm from "./components/BudgetForm"
-import {useBudget} from "./hooks/useBudget"
 function App() {
-
-    const {state, dispatch} = useBudget()
-    console.log(state);
-    
-    
     return (
     <>
       <header className="bg-blue-950  py-8 max-h-72">
