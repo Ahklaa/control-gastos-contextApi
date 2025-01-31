@@ -2,8 +2,9 @@ import { categories } from "../data/category";
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css'
 import 'react-calendar/dist/Calendar.css';
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import type { DraftExpense, Value } from "../types";
+import ErrorMessage from "./ErrorMessage";
 
 export default function ExpenseForm() {
     const [expense,setExpense] = useState<DraftExpense>({
@@ -13,15 +14,11 @@ export default function ExpenseForm() {
         date : new Date()
     
     })
+    const [error,setError] = useState("")
 
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement> ) => {
         const {name,value} = e.target
         const isAmountField = ['amount'].includes(name)
-        console.log(name);
-        console.log(value);
-        
-        
-        
         setExpense({
             ...expense,
             [name] : isAmountField ? +value : value
@@ -34,9 +31,27 @@ export default function ExpenseForm() {
             date : value
         })
     }
+
+    const handleSubmit = (e : FormEvent<HTMLFormElement> ) => {
+        e.preventDefault()
+        if (Object.values(expense).includes("") || Object.values(expense).includes(0)){
+            setError("Todos los campo son obligatorios")
+            return
+        }
+        console.log("Correcto");
+        
+    }
+    
   return (
-    <form className="space-y-5">
+    <form className="space-y-5" onSubmit={handleSubmit 
+
+    }>
         <legend className="text-2xl font-black text-center border-b-4 border-blue-500 p-2 uppercase">Nuevo Gasto</legend>
+        {error && (
+            <ErrorMessage>
+                {error}
+            </ErrorMessage>
+        )}
         <div className="flex flex-col gap-2">
             <label htmlFor="spentName" className="text-xl">Nombre Gasto:</label>
             <input 
