@@ -49,7 +49,8 @@ export const budgetReducer = (
         if(action.type == "add-expense"){
             return {
                 ...state,
-                expenses : [...state.expenses, createExpense(action.payload.expense)]
+                expenses : [...state.expenses, createExpense(action.payload.expense)],
+                modal : false
             }
         }
         return state

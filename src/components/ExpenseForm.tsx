@@ -55,12 +55,12 @@ export default function ExpenseForm() {
             </ErrorMessage>
         )}
         <div className="flex flex-col gap-2">
-            <label htmlFor="spentName" className="text-xl">Nombre Gasto:</label>
+            <label htmlFor="expenseName" className="text-xl">Nombre Gasto:</label>
             <input 
             className="bg-slate-100 p-2"
             type="text"
             name="expenseName"
-            id="spentName"
+            id="expenseName"
             placeholder="Añade el nombre del gasto"
             value = {expense.expenseName}
             onChange={handleChange}
@@ -79,7 +79,7 @@ export default function ExpenseForm() {
              />
         </div>
         <div className="flex flex-col gap-2">
-            <label htmlFor="category" className="text-xl">Cantidad:</label>
+            <label htmlFor="category" className="text-xl">Categoria:</label>
             <select 
             className="bg-slate-100 p-2" 
             value={expense.category} 
@@ -93,10 +93,12 @@ export default function ExpenseForm() {
             </select>   
         </div>
         <div className="flex flex-col gap-2">
-            <label htmlFor="date" className="text-xl">Nombre Gasto:</label>
+            <label htmlFor="date" className="text-xl">Fecha:</label>
             <DatePicker
                 value={expense.date}
-                onChange={handleChangeDate} />
+                onChange={handleChangeDate}
+                name ="date"
+                id = "date" />
         </div>
         <button className="w-full bg-blue-500 uppercase rounded-lg text-white font-bold hover:bg-blue-600 p-2">Registrar Gasto</button>
     </form>
