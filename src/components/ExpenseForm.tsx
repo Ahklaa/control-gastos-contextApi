@@ -2,16 +2,38 @@ import { categories } from "../data/category";
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css'
 import 'react-calendar/dist/Calendar.css';
-import { useState } from "react";
-import type { DraftExpense } from "../types";
-const [expense,setExpense] = useState<DraftExpense>({
-    expenseName : "",
-    amount : 0,
-    category : "",
-    date : new Date()
+import { ChangeEvent, useState } from "react";
+import type { DraftExpense, Value } from "../types";
 
-})
 export default function ExpenseForm() {
+    const [expense,setExpense] = useState<DraftExpense>({
+        expenseName : "",
+        amount : 0,
+        category : "",
+        date : new Date()
+    
+    })
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement> ) => {
+        const {name,value} = e.target
+        const isAmountField = ['amount'].includes(name)
+        console.log(name);
+        console.log(value);
+        
+        
+        
+        setExpense({
+            ...expense,
+            [name] : isAmountField ? +value : value
+        })        
+
+    }
+    const handleChangeDate = (value : Value) => {
+        setExpense({
+            ...expense,
+            date : value
+        })
+    }
   return (
     <form className="space-y-5">
         <legend className="text-2xl font-black text-center border-b-4 border-blue-500 p-2 uppercase">Nuevo Gasto</legend>
@@ -24,6 +46,7 @@ export default function ExpenseForm() {
             id="spentName"
             placeholder="Añade el nombre del gasto"
             value = {expense.expenseName}
+            onChange={handleChange}
              />
         </div>
         <div className="flex flex-col gap-2">
@@ -35,11 +58,17 @@ export default function ExpenseForm() {
             id="amount"
             placeholder="Añade el valor del gasto. Ej. 200"
             value = {expense.amount}
+            onChange={handleChange}
              />
         </div>
         <div className="flex flex-col gap-2">
             <label htmlFor="category" className="text-xl">Cantidad:</label>
-            <select className="bg-slate-100 p-2" value={expense.category}>
+            <select 
+            className="bg-slate-100 p-2" 
+            value={expense.category} 
+            onChange={handleChange}
+            name = "category"
+            id ="category">
                 <option value={""}>Selecciona una categoria</option>
                 {categories.map(category => (
                     <option value={category.id} key={category.id}>{category.name}</option>
@@ -49,7 +78,8 @@ export default function ExpenseForm() {
         <div className="flex flex-col gap-2">
             <label htmlFor="date" className="text-xl">Nombre Gasto:</label>
             <DatePicker
-                value={expense.date} />
+                value={expense.date}
+                onChange={handleChangeDate} />
         </div>
         <button className="w-full bg-blue-500 uppercase rounded-lg text-white font-bold hover:bg-blue-600 p-2">Registrar Gasto</button>
     </form>
