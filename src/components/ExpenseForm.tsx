@@ -58,7 +58,7 @@ export default function ExpenseForm() {
     <form className="space-y-5" onSubmit={handleSubmit 
 
     }>
-        <legend className="text-2xl font-black text-center border-b-4 border-blue-500 p-2 uppercase">Nuevo Gasto</legend>
+        <legend className="text-2xl font-black text-center border-b-4 border-blue-500 p-2 uppercase">{state.editingId ? "Editar Gasto" : "Nuevo Gasto"}</legend>
         {error && (
             <ErrorMessage>
                 {error}
@@ -110,7 +110,8 @@ export default function ExpenseForm() {
                 name ="date"
                 id = "date" />
         </div>
-        <button className="w-full bg-blue-500 uppercase rounded-lg text-white font-bold hover:bg-blue-600 p-2">Registrar Gasto</button>
+        <button className="w-full bg-blue-500 uppercase rounded-lg text-white font-bold hover:bg-blue-600 p-2"
+        >{state.editingId ? "Guardar Gasto" : "Registrar Gasto"}</button>
     </form>
   )
 }
